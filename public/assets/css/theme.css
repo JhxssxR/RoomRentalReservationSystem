@@ -1,0 +1,362 @@
+/* 
+ * Custom Theme Styles
+ * Sage Green + Pale Blue Color Scheme
+ */
+
+:root {
+    /* Sage Green Palette */
+    --sage-50: #f4f7f4;
+    --sage-100: #e4ebe4;
+    --sage-200: #c9d9c9;
+    --sage-300: #a3bfa3;
+    --sage-400: #7a9f7a;
+    --sage-500: #4a7c59;
+    --sage-600: #3d6549;
+    --sage-700: #33523d;
+    --sage-800: #2b4333;
+    --sage-900: #24382b;
+
+    /* Pale Blue Palette */
+    --blue-50: #f0f7ff;
+    --blue-100: #e0efff;
+    --blue-200: #baddff;
+    --blue-300: #7cc2ff;
+    --blue-400: #36a3ff;
+    --blue-500: #0c87eb;
+    --blue-600: #006bc9;
+    --blue-700: #0055a3;
+    --blue-800: #054986;
+    --blue-900: #0a3d6f;
+
+    /* Neutral Colors */
+    --neutral-50: #fafafa;
+    --neutral-100: #f5f5f5;
+    --neutral-200: #e5e5e5;
+    --neutral-300: #d4d4d4;
+    --neutral-400: #a3a3a3;
+    --neutral-500: #737373;
+    --neutral-600: #525252;
+    --neutral-700: #404040;
+    --neutral-800: #262626;
+    --neutral-900: #171717;
+
+    /* Semantic Colors */
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: var(--blue-500);
+}
+
+/* Background Colors */
+.bg-sage-primary {
+    background-color: var(--sage-500);
+}
+
+.bg-sage-light {
+    background-color: var(--sage-100);
+}
+
+.bg-sage-dark {
+    background-color: var(--sage-700);
+}
+
+.bg-blue-primary {
+    background-color: var(--blue-500);
+}
+
+.bg-blue-light {
+    background-color: var(--blue-100);
+}
+
+.bg-blue-pale {
+    background-color: var(--blue-50);
+}
+
+/* Text Colors */
+.text-sage-primary {
+    color: var(--sage-500);
+}
+
+.text-sage-dark {
+    color: var(--sage-700);
+}
+
+.text-blue-primary {
+    color: var(--blue-500);
+}
+
+.text-blue-dark {
+    color: var(--blue-700);
+}
+
+/* Border Colors */
+.border-sage {
+    border-color: var(--sage-300);
+}
+
+.border-blue {
+    border-color: var(--blue-300);
+}
+
+/* Button Styles */
+.btn-sage {
+    background-color: var(--sage-500);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-sage:hover {
+    background-color: var(--sage-600);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 124, 89, 0.3);
+}
+
+.btn-sage-outline {
+    background-color: transparent;
+    color: var(--sage-500);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 2px solid var(--sage-500);
+    cursor: pointer;
+}
+
+.btn-sage-outline:hover {
+    background-color: var(--sage-500);
+    color: white;
+}
+
+.btn-blue {
+    background-color: var(--blue-500);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-blue:hover {
+    background-color: var(--blue-600);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(12, 135, 235, 0.3);
+}
+
+/* Card Styles */
+.card-sage {
+    background: white;
+    border: 1px solid var(--sage-200);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.card-blue {
+    background: white;
+    border: 1px solid var(--blue-200);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Input Styles */
+.input-sage {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--sage-200);
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.input-sage:focus {
+    border-color: var(--sage-500);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+}
+
+.input-blue {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--blue-200);
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.input-blue:focus {
+    border-color: var(--blue-500);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(12, 135, 235, 0.1);
+}
+
+/* Header/Navigation */
+.nav-sage {
+    background: linear-gradient(135deg, var(--sage-500) 0%, var(--sage-600) 100%);
+}
+
+/* Sidebar */
+.sidebar-sage {
+    background: linear-gradient(180deg, var(--sage-50) 0%, var(--sage-100) 100%);
+    border-right: 1px solid var(--sage-200);
+}
+
+/* Hero Section with Overlay */
+.hero-overlay {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(74, 124, 89, 0.85) 0%, rgba(12, 135, 235, 0.7) 100%);
+}
+
+.hero-overlay > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Room Card Styles */
+.room-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.room-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.room-card-image {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.room-card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--sage-500);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Status Badges */
+.badge-available {
+    background-color: var(--success);
+    color: white;
+}
+
+.badge-occupied {
+    background-color: var(--error);
+    color: white;
+}
+
+.badge-pending {
+    background-color: var(--warning);
+    color: white;
+}
+
+.badge-reserved {
+    background-color: var(--blue-500);
+    color: white;
+}
+
+/* Table Styles */
+.table-sage {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-sage th {
+    background-color: var(--sage-100);
+    color: var(--sage-700);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.table-sage td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--sage-100);
+}
+
+.table-sage tr:hover {
+    background-color: var(--sage-50);
+}
+
+/* Alert/Notification Styles */
+.alert-success {
+    background-color: #dcfce7;
+    border-left: 4px solid var(--success);
+    color: #166534;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    border-left: 4px solid var(--error);
+    color: #991b1b;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.alert-warning {
+    background-color: #fef3c7;
+    border-left: 4px solid var(--warning);
+    color: #92400e;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.alert-info {
+    background-color: var(--blue-100);
+    border-left: 4px solid var(--blue-500);
+    color: var(--blue-800);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Footer */
+.footer-sage {
+    background: linear-gradient(135deg, var(--sage-800) 0%, var(--sage-900) 100%);
+    color: white;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sage-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sage-400);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sage-500);
+}
