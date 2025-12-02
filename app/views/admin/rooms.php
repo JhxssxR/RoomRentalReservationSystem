@@ -217,7 +217,6 @@ $pageTitle = 'Manage Rooms - Room Rental';
                             <select name="status" id="edit_status" required class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-pale-500 focus:ring-0 transition">
                                 <option value="available">Available</option>
                                 <option value="occupied">Occupied</option>
-                                <option value="maintenance">Maintenance</option>
                             </select>
                         </div>
                     </div>
@@ -258,7 +257,7 @@ $pageTitle = 'Manage Rooms - Room Rental';
             document.getElementById('edit_type').value = room.room_type || room.type || 'Standard';
             document.getElementById('edit_capacity').value = room.capacity || 2;
             document.getElementById('edit_price').value = room.price || room.price_per_night || 0;
-            document.getElementById('edit_status').value = room.status || 'available';
+            document.getElementById('edit_status').value = (room.status || 'available').toLowerCase();
             document.getElementById('edit_description').value = room.description || '';
             document.getElementById('edit_amenities').value = room.amenities || '';
             openModal('editRoomModal');

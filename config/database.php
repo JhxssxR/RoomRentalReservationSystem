@@ -23,7 +23,6 @@ try {
     die("Database connection failed. Please try again later.");
 }
 
-/
 $createTablesSQL = "
 -- Customers table
 CREATE TABLE IF NOT EXISTS customers (

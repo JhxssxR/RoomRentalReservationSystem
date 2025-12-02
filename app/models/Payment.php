@@ -95,11 +95,12 @@ class Payment
         $paymentId = $this->columns['payment_id'];
         
         $sql = "SELECT p.*, r.{$checkIn} as check_in, r.{$checkOut} as check_out, r.total_price as reservation_total,
+                       r.customer_id as customer_id,
                        c.name as customer_name, c.email as customer_email, c.{$contact} as customer_phone,
                        rm.room_number, rm.{$roomType} as room_type
                 FROM {$this->table} p
                 LEFT JOIN reservations r ON p.reservation_id = r.reservation_id
-                LEFT JOIN customers c ON r.{$custId} = c.{$custId}
+                LEFT JOIN customers c ON r.customer_id = c.{$custId}
                 LEFT JOIN rooms rm ON r.room_id = rm.room_id
                 WHERE p.{$paymentId} = :id LIMIT 1";
         $stmt = $this->db->prepare($sql);

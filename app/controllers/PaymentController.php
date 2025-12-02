@@ -141,8 +141,19 @@ class PaymentController
 
         $payment = $this->paymentModel->getById($id);
 
-        if (!$payment || $payment['customer_id'] != $_SESSION['user_id']) {
+        if (!$payment) {
             $_SESSION['error'] = 'Payment not found';
+            header('Location: ' . BASE_URL . '/payments');
+            exit;
+        }
+
+        // Allow admin to view any receipt, customers can only view their own
+        $isAdmin = Auth::isAdmin();
+        $customerId = $payment['customer_id'] ?? null;
+        $isOwner = $customerId !== null && $customerId == $_SESSION['user_id'];
+        
+        if (!$isAdmin && !$isOwner) {
+            $_SESSION['error'] = 'Access denied';
             header('Location: ' . BASE_URL . '/payments');
             exit;
         }

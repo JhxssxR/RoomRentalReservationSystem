@@ -34,6 +34,12 @@ class RoomController
         if (!empty($_GET['capacity'])) {
             $filters['capacity'] = filter_input(INPUT_GET, 'capacity', FILTER_SANITIZE_NUMBER_INT);
         }
+        if (!empty($_GET['check_in'])) {
+            $filters['check_in'] = trim($_GET['check_in']);
+        }
+        if (!empty($_GET['check_out'])) {
+            $filters['check_out'] = trim($_GET['check_out']);
+        }
 
         $rooms = $this->roomModel->getAvailable($filters);
         $roomTypes = $this->roomModel->getTypes();

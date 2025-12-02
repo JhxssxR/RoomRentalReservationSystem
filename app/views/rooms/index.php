@@ -26,10 +26,10 @@ include __DIR__ . '/../layouts/header.php';
             </div>
             <h2 class="text-lg font-semibold text-gray-800">Filter Rooms</h2>
         </div>
-        <form method="GET" action="<?php echo BASE_URL; ?>/rooms" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <form method="GET" action="<?php echo BASE_URL; ?>/rooms" id="filterForm" class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Room Type</label>
-                <select name="type" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition bg-white">
+                <select name="type" onchange="this.form.submit()" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition bg-white cursor-pointer">
                     <option value="">All Types</option>
                     <?php if (!empty($roomTypes)): foreach ($roomTypes as $type): ?>
                         <option value="<?php echo htmlspecialchars($type); ?>" <?php echo (isset($_GET['type']) && $_GET['type'] === $type) ? 'selected' : ''; ?>>
@@ -40,37 +40,65 @@ include __DIR__ . '/../layouts/header.php';
             </div>
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Check-in</label>
-                <input type="date" name="check_in" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition" value="<?php echo htmlspecialchars($_GET['check_in'] ?? ''); ?>" min="<?php echo date('Y-m-d'); ?>">
+                <input type="date" name="check_in" onchange="this.form.submit()" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition cursor-pointer" value="<?php echo htmlspecialchars($_GET['check_in'] ?? ''); ?>" min="<?php echo date('Y-m-d'); ?>">
             </div>
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Check-out</label>
-                <input type="date" name="check_out" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition" value="<?php echo htmlspecialchars($_GET['check_out'] ?? ''); ?>">
+                <input type="date" name="check_out" onchange="this.form.submit()" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition cursor-pointer" value="<?php echo htmlspecialchars($_GET['check_out'] ?? ''); ?>">
             </div>
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Guests</label>
-                <select name="capacity" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition bg-white">
+                <select name="capacity" onchange="this.form.submit()" class="w-full px-4 py-3 border-2 border-sage-200 rounded-xl focus:border-sage-500 transition bg-white cursor-pointer">
                     <option value="">Any</option>
                     <?php for ($i = 1; $i <= 6; $i++): ?>
                         <option value="<?php echo $i; ?>" <?php echo (isset($_GET['capacity']) && $_GET['capacity'] == $i) ? 'selected' : ''; ?>><?php echo $i; ?> Guest<?php echo $i > 1 ? 's' : ''; ?></option>
                     <?php endfor; ?>
                 </select>
             </div>
-            <div class="flex items-end">
-                <button type="submit" class="w-full bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white py-3 px-6 rounded-xl font-medium transition shadow-lg flex items-center justify-center">
+            <div class="flex items-end gap-2">
+                <?php if (!empty($_GET['type']) || !empty($_GET['check_in']) || !empty($_GET['check_out']) || !empty($_GET['capacity'])): ?>
+                <a href="<?php echo BASE_URL; ?>/rooms" class="flex-1 py-3 px-4 border-2 border-gray-300 text-gray-600 rounded-xl hover:bg-gray-100 transition flex items-center justify-center" title="Clear Filters">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
-                    Search
-                </button>
+                    Clear
+                </a>
+                <?php else: ?>
+                <div class="flex-1 py-3 px-4 bg-sage-50 text-sage-600 rounded-xl flex items-center justify-center text-sm">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Select filters
+                </div>
+                <?php endif; ?>
             </div>
         </form>
     </div>
 
-    <!-- Results Count -->
-    <div class="flex items-center justify-between mb-6">
+    <!-- Results Count & Active Filters -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
         <p class="text-gray-600">
-            <span class="font-semibold text-sage-600"><?php echo count($rooms); ?></span> room<?php echo count($rooms) > 1 ? 's' : ''; ?> found
+            <span class="font-semibold text-sage-600"><?php echo count($rooms); ?></span> room<?php echo count($rooms) != 1 ? 's' : ''; ?> found
         </p>
+        <?php if (!empty($_GET['type']) || !empty($_GET['check_in']) || !empty($_GET['check_out']) || !empty($_GET['capacity'])): ?>
+        <div class="flex flex-wrap gap-2">
+            <?php if (!empty($_GET['type'])): ?>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-sage-100 text-sage-700">
+                <span class="font-medium">Type:</span>&nbsp;<?php echo htmlspecialchars($_GET['type']); ?>
+            </span>
+            <?php endif; ?>
+            <?php if (!empty($_GET['check_in']) && !empty($_GET['check_out'])): ?>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-sage-100 text-sage-700">
+                <span class="font-medium">Dates:</span>&nbsp;<?php echo date('M j', strtotime($_GET['check_in'])); ?> - <?php echo date('M j', strtotime($_GET['check_out'])); ?>
+            </span>
+            <?php endif; ?>
+            <?php if (!empty($_GET['capacity'])): ?>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-sage-100 text-sage-700">
+                <span class="font-medium">Guests:</span>&nbsp;<?php echo htmlspecialchars($_GET['capacity']); ?>+
+            </span>
+            <?php endif; ?>
+        </div>
+        <?php endif; ?>
     </div>
 
     <!-- Rooms Grid -->

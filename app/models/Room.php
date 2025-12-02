@@ -121,6 +121,7 @@ class Room
     {
         $typeCol = $this->columns['type'];
         $priceCol = $this->columns['price'];
+        $idCol = $this->columns['id'];
         
         // Try to match available status with case-insensitive comparison
         $sql = "SELECT * FROM {$this->table} WHERE LOWER(status) = 'available'";
@@ -144,6 +145,37 @@ class Room
         if (!empty($filters['capacity'])) {
             $sql .= " AND capacity >= :capacity";
             $params['capacity'] = $filters['capacity'];
+        }
+
+        // Filter by date availability (exclude rooms with overlapping reservations)
+        if (!empty($filters['check_in']) && !empty($filters['check_out'])) {
+            // Detect reservation column names
+            $checkInCol = 'check_in_date';
+            $checkOutCol = 'check_out_date';
+            try {
+                $stmt = $this->db->query("DESCRIBE reservations");
+                $cols = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                if (in_array('check_in', $cols)) {
+                    $checkInCol = 'check_in';
+                    $checkOutCol = 'check_out';
+                }
+            } catch (Exception $e) {}
+
+            $sql .= " AND {$idCol} NOT IN (
+                SELECT room_id FROM reservations 
+                WHERE status NOT IN ('cancelled', 'completed', 'Cancelled', 'Completed', 'rejected', 'Rejected')
+                AND (
+                    ({$checkInCol} <= :check_in AND {$checkOutCol} > :check_in2)
+                    OR ({$checkInCol} < :check_out AND {$checkOutCol} >= :check_out2)
+                    OR ({$checkInCol} >= :check_in3 AND {$checkOutCol} <= :check_out3)
+                )
+            )";
+            $params['check_in'] = $filters['check_in'];
+            $params['check_in2'] = $filters['check_in'];
+            $params['check_in3'] = $filters['check_in'];
+            $params['check_out'] = $filters['check_out'];
+            $params['check_out2'] = $filters['check_out'];
+            $params['check_out3'] = $filters['check_out'];
         }
 
         $sql .= " ORDER BY {$priceCol} ASC";

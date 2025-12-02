@@ -57,6 +57,9 @@ if (preg_match('/^\/rooms\/(\d+)$/', $request, $matches)) {
 } elseif (preg_match('/^\/reservations\/(\d+)\/cancel$/', $request, $matches)) {
     $controller = new ReservationController();
     $controller->cancel($matches[1]);
+} elseif (preg_match('/^\/payments\/(\d+)\/receipt$/', $request, $matches)) {
+    $controller = new PaymentController();
+    $controller->receipt($matches[1]);
 } else {
     // Static routes
     switch ($request) {
